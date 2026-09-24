@@ -1,0 +1,17 @@
+# 多声部排练谱小节对齐核对台 —— 离线纯前端
+# TypeScript + React + Vite，由 Docker Compose 运行 web 服务（Vite dev server）。
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rhythm-bar-checker:dev
+    container_name: rhythm-bar-checker-web
+    ports:
+      - "5173:5173"
+    # 源码挂载进容器，本地改代码即时热更新；node_modules 用匿名卷隔离。
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0
+    restart: unless-stopped
